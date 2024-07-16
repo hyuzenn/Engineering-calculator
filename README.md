@@ -222,4 +222,113 @@ int main(){
                 ans_memory(value, calculations, &count);
                 break;
             case 8:
-                printf("---팩토리얼 계산
+    	   		 printf("---팩토리얼 계산--- \n");
+    	  		 printf("몇 번째 숫자부터 계산할지 입력하시오. ");
+    			 scanf("%d", &fact_num);
+    			 value = fact_cal(fact_num);
+                             ans_memory(value, calculations, &count);
+    			 break;
+  		    case 9:
+    	  		 printf("---이전 계산 값--- \n");
+    	  		 printf("최근 10개의 계산 값을 불러옵니다. \n");
+    	  		 for (int i = 0; i < count; i++)
+    				 printf("%.2lf \n", calculations[i]);
+    	  		 break;
+      		default:
+    			 printf("올바른 선택이 아닙니다. \n");
+ 	}
+	 printf("%lf \n", value);
+ 	 choice = closing();
+ } while (choice == 1);
+ printf("계산기를 종료합니다. \n");
+
+ return 0;
+}
+
+double integrate_cal(double x){
+	double j=0;
+	int i;
+	for (i = 0; i < 6; i++)
+	{
+		j += coefficient[i] * pow(x, i); //다항식의 꼴로 만들어줌
+	}
+	return j;
+}
+
+double log_cal(int log_type, int antilog){
+	double result = log_type == 1 ? log(antilog) : log10(antilog);
+	return result; 
+}
+
+double polynomial_cal(double x1, double* coefficients, int degree) {
+    double result = 0;
+    for (int i = 0; i <= degree; i++) {
+        result += coefficients[i] * pow(x1, i);
+    }
+    return result;
+}
+
+double trigon_cal(int trigon_type, int trigon_type2, double radian){ 
+	if (trigon_type == 1) {
+		if (trigon_type2 == 1)
+			return sin(radian);
+		else if (trigon_type2 == 2)
+                        return cos(radian);
+		else
+                        return tan(radian);
+	}
+
+	else if (trigon_type == 2) {
+                if (trigon_type2 == 1)
+                        return asin(radian);
+                else if (trigon_type2 == 2)
+                        return acos(radian);
+                else
+                        return atan(radian);
+        }
+
+	else{
+		if (trigon_type2 == 1)
+                        return sinh(radian);
+                else if (trigon_type2 == 2)
+                        return cosh(radian);
+                else
+                        return tanh(radian);
+	}
+}
+
+double exponential_cal(int x){
+	return exp(x);
+}
+
+double arithmetic_seq_cal(int a, int d, int n){
+	return (n*(2*a + (n-1)*d))/2;
+}
+
+double geometric_seq_cal(int a, int r, int n){
+	return (a*(pow(r, n) - 1))/(r-1);
+}
+
+int fact_cal(int num) {
+	int result = 1;
+	for (int i = 2; i <= num; ++i) {
+        	result *= i;
+    	}
+    	return result;
+}
+
+void ans_memory(double value, double calculations[], int *count) {
+    // 배열이 가득 찼을 경우
+    if (*count == max_memory_size) {
+        // 모든 값들을 한 칸씩 앞으로 이동
+        for (int i = 0; i < max_memory_size - 1; i++) {
+            calculations[i] = calculations[i + 1];
+        }
+        // 새로운 값을 배열의 마지막에 추가
+        calculations[max_memory_size - 1] = value;
+    } else {
+        // 아직 배열이 가득 차지 않았을 경우
+        calculations[*count] = value;
+        (*count)++;
+    }
+}
